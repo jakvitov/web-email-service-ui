@@ -1,15 +1,15 @@
-import LoginButton from "./components/LoginButton";
-import LogoutButton from "./components/LogoutButton";
 import UserProfileInfo from "./pages/UserProfileInfo";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 
 function App() {
   return (
-      <div>
-        <h1>Weather email service</h1>
-            <LoginButton/>
-            <LogoutButton/>
-            <UserProfileInfo/>
-      </div>
+      <BrowserRouter>
+          <Routes>
+              <Route path="/" element={<Home />}/>
+              <Route path="/dashboard" element={<UserProfileInfo />}/>
+          </Routes>
+      </BrowserRouter>
   );
 }
 

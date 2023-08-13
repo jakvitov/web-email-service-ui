@@ -1,7 +1,11 @@
+import LoginButton from "./components/LoginButton";
 
 function App() {
   return (
-    <h1>Aplication</h1>
+      <div>
+        <h1>Weather email service</h1>
+        <LoginButton/>
+      </div>
   );
 }
 

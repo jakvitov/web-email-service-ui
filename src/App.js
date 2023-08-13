@@ -1,6 +1,6 @@
 import LoginButton from "./components/LoginButton";
 import LogoutButton from "./components/LogoutButton";
-import UserProfileInfo from "./components/UserProfileInfo";
+import UserProfileInfo from "./pages/UserProfileInfo";
 
 function App() {
   return (

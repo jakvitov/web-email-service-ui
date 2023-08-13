@@ -1,6 +1,7 @@
 import {useAuth0} from "@auth0/auth0-react";
-import LoginButton from "./LoginButton";
+import LoginButton from "../components/LoginButton";
 import {useState} from "react";
+import UserBackendInfo from "../components/UserBackendInfo";
 
 
 const UserProfileInfo = () => {
@@ -20,6 +21,7 @@ const UserProfileInfo = () => {
         return (
             <div id="userProfileInfo">
                 <p>Email: {user.email}</p>
+                <UserBackendInfo/>
             </div>
         )
     }

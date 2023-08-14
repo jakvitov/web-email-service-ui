@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {useAuth0} from "@auth0/auth0-react";
 import axios from "axios";
 import {useError} from "./ErrorContext";
+import { useNavigate } from "react-router-dom";
 const { v4: uuidv4 } = require('uuid');
 
 
@@ -11,8 +12,13 @@ const UserBackendInfo = () => {
     const [userInfoFromBackend, setUserInfoFromBackend] = useState(null);
     const {setError} = useError();
 
+    const navigate = useNavigate();
+
     useEffect( () => {
         async function fetchData(){
+            if (!isAuthenticated || isLoading){
+                return;
+            }
             const tokenRes = await getIdTokenClaims();
             const token = tokenRes.__raw;
             const axiosConfig = {
@@ -26,14 +32,23 @@ const UserBackendInfo = () => {
     fetchData()
     }, [isAuthenticated, isLoading])
 
+    const redirectToRegistration = () => {
+        navigate("/register")
+    }
+
     if (isLoading || !isAuthenticated){
         return null;
     }
     else  if (userInfoFromBackend == null){
         return null;
     }
-    else if (userInfoFromBackend.responseState != "OK")
+    else if (userInfoFromBackend.responseState != "OK") {
+        if (userInfoFromBackend.responseState === "USER_NOT_FOUND"){
+            redirectToRegistration();
+            return null;
+        }
         return <p>{userInfoFromBackend.responseState}</p>
+    }
     else {
         return (
         <div id="userInfoFromBackendDiv">

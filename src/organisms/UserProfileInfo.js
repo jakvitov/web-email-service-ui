@@ -9,9 +9,6 @@ const UserProfileInfo = () => {
 
     const {user, isAuthenticated, isLoading, getIdTokenClaims} = useAuth0();
     const {setError} = useError();
-
-    const token = getIdTokenClaims().then((id) => id.__raw).catch(err => setError(err))
-
     if (isLoading){
         return <div id="loadingDiv">Loading...</div>;
     }
@@ -19,6 +16,7 @@ const UserProfileInfo = () => {
         return <div id="notAuthenticatedDiv"><LoginButton/></div>
     }
     else {
+        const token = getIdTokenClaims().then((id) => id.__raw).catch(err => setError(err))
         return (
             <div id="userProfileInfo">
                 <Hud/>

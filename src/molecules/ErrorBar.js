@@ -1,10 +1,15 @@
-import {UseError} from "../atoms/ErrorContext"
+import {useError} from "../atoms/ErrorContext"
 
 const ErrorBar = () => {
-    const {error}  = UseError();
+
+    const {error} = useError();
 
     if (!error){
         return null;
     }
-    return <div class="errorBar">Error: {error}</div>
+    else {
+        return <div class="errorBar">Error: {error}</div>
+    }
 }
+
+export default ErrorBar

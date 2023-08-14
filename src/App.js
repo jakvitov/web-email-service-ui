@@ -2,7 +2,7 @@ import UserProfileInfo from "./organisms/UserProfileInfo";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./organisms/Home";
 import RegisterUser from "./organisms/RegisterUser";
-import {ErrorProvider, ErrorBoundary} from "./atoms/ErrorContext";
+import {ErrorProvider} from "./atoms/ErrorContext";
 
 function App() {
 

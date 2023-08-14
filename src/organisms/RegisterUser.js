@@ -5,8 +5,8 @@ import CountryIsoInput from "../atoms/CountryIsoInput";
 import axios from "axios";
 import {useAuth0} from "@auth0/auth0-react";
 import {v4 as uuidv4} from "uuid";
-import {useError} from "../atoms/ErrorContext";
-import ErrorBar from "../molecules/ErrorBar";
+import {UseAlert} from "../atoms/AlertContext";
+import AlertBar from "../molecules/AlertBar";
 import { useNavigate } from "react-router-dom";
 
 
@@ -15,7 +15,7 @@ const RegisterUser = () => {
     const [city, setCity] = useState(null);
     const [country, setCountry] = useState(null);
     const {isLoading, isAuthenticated, getIdTokenClaims} = useAuth0();
-    const {setError} = useError();
+    const {setAlert} = UseAlert();
     const navigate = useNavigate();
 
     const registerUserAction= async () => {
@@ -33,18 +33,18 @@ const RegisterUser = () => {
             "countryISO" : country
         }
         const registerUserResponse = axios.post("/user/create", registerRequestBody,axiosConfig).then(response => {
-            console.log(registerUserResponse)
+            navigate("/confirmation")
         }).catch((err) => {
             //City not found - invalid input
             if (err.response.status === 404){
-                setError("City " + city + ", " + country + " not found!");
+                setAlert("City " + city + ", " + country + " not found!");
             }
             //User already exists
             else if (err.response.status === 409){
-                setError("User with email " + tokenResponse.email + " is already signed up!")
+                setAlert("User with email " + tokenResponse.email + " is already signed up!")
             }
             else if (err.response.status !== 200){
-                setError("Server error.")
+                setAlert("Server error.")
             }
         })
     }
@@ -66,7 +66,7 @@ const RegisterUser = () => {
             <CityInput setCity={setCity}/>
             <CountryIsoInput setCountry={setCountry}/>
             <button onClick={registerUserAction}>Submit!</button>
-            <ErrorBar/>
+            <AlertBar/>
         </div>
     )
 

@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {useAuth0} from "@auth0/auth0-react";
 import axios from "axios";
-import {useError} from "./ErrorContext";
+import {UseAlert} from "./AlertContext";
 import { useNavigate } from "react-router-dom";
 const { v4: uuidv4 } = require('uuid');
 
@@ -10,7 +10,7 @@ const UserBackendInfo = () => {
 
     const {isAuthenticated, isLoading, getIdTokenClaims} = useAuth0();
     const [userInfoFromBackend, setUserInfoFromBackend] = useState(null);
-    const {setError} = useError();
+    const {setAlert} = UseAlert();
 
     const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ const UserBackendInfo = () => {
                     TRACE_ID: uuidv4()
                 }
             }
-            const userInfoResponse = axios.get("/user/info", axiosConfig).then(response => setUserInfoFromBackend(response.data)).catch(err => setError(err))
+            const userInfoResponse = axios.get("/user/info", axiosConfig).then(response => setUserInfoFromBackend(response.data)).catch(err => setAlert(err))
         }
     fetchData()
     }, [isAuthenticated, isLoading])

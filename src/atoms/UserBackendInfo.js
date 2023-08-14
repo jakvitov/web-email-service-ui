@@ -1,12 +1,15 @@
 import {useEffect, useState} from "react";
 import {useAuth0} from "@auth0/auth0-react";
 import axios from "axios";
+import {useError} from "./ErrorContext";
 const { v4: uuidv4 } = require('uuid');
+
 
 const UserBackendInfo = () => {
 
-    const {user, isAuthenticated, isLoading, getIdTokenClaims} = useAuth0();
+    const {isAuthenticated, isLoading, getIdTokenClaims} = useAuth0();
     const [userInfoFromBackend, setUserInfoFromBackend] = useState(null);
+    const {setError} = useError();
 
     useEffect( () => {
         async function fetchData(){
@@ -18,7 +21,7 @@ const UserBackendInfo = () => {
                     TRACE_ID: uuidv4()
                 }
             }
-            const userInfoResponse = axios.get("/user/info", axiosConfig).then(response => setUserInfoFromBackend(response.data)).catch(err => console.log(err))
+            const userInfoResponse = axios.get("/user/info", axiosConfig).then(response => setUserInfoFromBackend(response.data)).catch(err => setError(err))
         }
     fetchData()
     }, [isAuthenticated, isLoading])

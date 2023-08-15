@@ -4,6 +4,7 @@ import Home from "./organisms/Home";
 import RegisterUser from "./organisms/RegisterUser";
 import {AlertProvider} from "./atoms/AlertContext";
 import ConfirmationEmailPage from "./organisms/ConfirmationEmailPage";
+import "./App.css"
 
 function App() {
 
